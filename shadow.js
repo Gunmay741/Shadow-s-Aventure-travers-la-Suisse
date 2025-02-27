@@ -7,10 +7,11 @@ window.addEventListener('load', function () {
     let score = 0; 
     let gameOver = false; 
     let gameStarted = false; 
-    let quizTime = false;
+    let quizTime = true;
     let answerRed = false;
     let answerBlue = false;
     let answerPurple = false;
+    let answer = 2;
 
     // Start screen elements
     const startScreen = document.createElement('div');
@@ -23,10 +24,11 @@ window.addEventListener('load', function () {
     startScreen.style.fontFamily = 'Helvetica, sans-serif';
     startScreen.style.color = 'white';
     startScreen.innerHTML = `
-        <h1>Shadow's Aventure à travers la Suisse</h1>
-        <h4>Tous les ennemis ont une aura invisible</h4>
-        <h4>autour d'eux qui mettra fin à votre partie!!</h4>
-        <h3>Vous ne pouvez appuyer que sur 1 touche à la fois</h3>
+        <h3>Shadow's Aventure à travers la Suisse</h3>
+        <h4>  Utilisez les touches fléchées pour vous déplacer.</h4>
+        <h4> Tous les ennemis ont une aura invisible autour d'eux </h4>
+        <h4>qui mettra fin à votre partie!! </h4>
+        <h4>Vous ne pouvez appuyer que sur 1 touche à la fois.</h4>
         <p>Appuyez sur 'Entrée' pour démarrer</p>
     `;
     document.body.appendChild(startScreen);
@@ -141,6 +143,13 @@ window.addEventListener('load', function () {
             return this.y >= this.gameHeight - this.height;
         }
     }
+  
+
+
+
+
+   
+
 
     class Background {
         constructor(gameWidth, gameHeight) {
@@ -336,6 +345,15 @@ window.addEventListener('load', function () {
         enemies = enemies.filter(enemy => !enemy.markedforDeletion);
     }
 
+    function displayStatusText1(context) {
+
+            context.textAlign = 'center';
+            context.fillStyle = 'black';
+            context.fillText('Bonjour, sautez par-dessus les ennemis pour gagner des points. Lorsque une question est affichée, les ennemis changeront de couleur en fonction des options proposées. Vous devrez traverser lennemi de la couleur correspondant à la bonne réponse pour continuer', canvas.width / 2, 200);
+            context.fillStyle = 'white';
+            context.fillText('Bonjour, sautez par-dessus les ennemis pour gagner des points. Lorsque une question est affichée, les ennemis changeront de couleur en fonction des options proposées. Vous devrez traverser lennemi de la couleur correspondant à la bonne réponse pour continuer', canvas.width / 2 + 2, 202);
+    }
+
     function displayStatusText(context) {
         context.font = '40px Helvetica';
         context.fillStyle = 'black';
@@ -345,9 +363,9 @@ window.addEventListener('load', function () {
         if (gameOver) {
             context.textAlign = 'center';
             context.fillStyle = 'black';
-            context.fillText('Game Over, Ctrl + r To Try Again! ', canvas.width / 2, 200);
+            context.fillText('Fin de Jeu, Ctrl + r pour réessayer! ', canvas.width / 2, 200);
             context.fillStyle = 'white';
-            context.fillText('Game Over, Ctrl + r To Try Again! ', canvas.width / 2 + 2, 202);
+            context.fillText('Fin de Jeu, Ctrl + r pour réessayer! ', canvas.width / 2 + 2, 202);
         }
     }
 
@@ -368,6 +386,7 @@ window.addEventListener('load', function () {
         player.update(input, deltaTime, enemies);
         handleEnemies(deltaTime);
         displayStatusText(ctx);
+        displayStatusText1(ctx);
         if (!gameOver) requestAnimationFrame(animate);
     }
 });
