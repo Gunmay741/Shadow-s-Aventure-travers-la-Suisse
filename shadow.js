@@ -1,17 +1,16 @@
-window.addEventListener('load', function () { 
-    const canvas = document.getElementById('canvas1'); 
-    const ctx = canvas.getContext('2d'); 
-    canvas.width = 800; 
-    canvas.height = 720; 
-    let enemies = []; 
-    let score = 0; 
-    let gameOver = false; 
-    let gameStarted = false; 
-    let quizTime = true;
+window.addEventListener('load', function () {
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 800;
+    canvas.height = 720;
+    let enemies = [];
+    let score = 0;
+    let gameOver = false;
+    let gameStarted = false;
+    let quizTime = false;
     let answerRed = false;
     let answerBlue = false;
     let answerPurple = false;
-    let answer = 2;
 
     // Start screen elements
     const startScreen = document.createElement('div');
@@ -24,11 +23,10 @@ window.addEventListener('load', function () {
     startScreen.style.fontFamily = 'Helvetica, sans-serif';
     startScreen.style.color = 'white';
     startScreen.innerHTML = `
-        <h3>Shadow's Aventure à travers la Suisse</h3>
-        <h4>  Utilisez les touches fléchées pour vous déplacer.</h4>
-        <h4> Tous les ennemis ont une aura invisible autour d'eux </h4>
-        <h4>qui mettra fin à votre partie!! </h4>
-        <h4>Vous ne pouvez appuyer que sur 1 touche à la fois.</h4>
+        <h1>Shadow's Aventure à travers la Suisse</h1>
+        <h4>Tous les ennemis ont une aura invisible</h4>
+        <h4>autour d'eux qui mettra fin à votre partie!!</h4>
+        <h3>Vous ne pouvez appuyer que sur 1 touche à la fois</h3>
         <p>Appuyez sur 'Entrée' pour démarrer</p>
     `;
     document.body.appendChild(startScreen);
@@ -49,7 +47,7 @@ window.addEventListener('load', function () {
                 if ((e.key === 'ArrowDown' ||
                     e.key === 'ArrowUp' ||
                     e.key === 'ArrowLeft' ||
-                    e.key === 'ArrowRight') 
+                    e.key === 'ArrowRight')
                     && this.keys.indexOf(e.key) === -1) {
                     this.keys.push(e.key);
                 }
@@ -90,7 +88,7 @@ window.addEventListener('load', function () {
                 const dx = (enemy.x + enemy.width / 2) - (this.x + this.width / 2);
                 const dy = (enemy.y + enemy.height / 2) - (this.y + this.height / 2);
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                
+               
                 if (distance < enemy.width / 2 + this.width / 2) {
                     // Specific collision checks
                     if (enemy instanceof Enemy) {
@@ -98,8 +96,8 @@ window.addEventListener('load', function () {
                             // Game Over if a normal enemy hits the player and it's not quiz time
                             gameOver = true;
                         }
-                    } else if ((enemy instanceof EnemyRed && !answerRed) || 
-                               (enemy instanceof EnemyBlue && !answerBlue) || 
+                    } else if ((enemy instanceof EnemyRed && !answerRed) ||
+                               (enemy instanceof EnemyBlue && !answerBlue) ||
                                (enemy instanceof EnemyPurple && !answerPurple)) {
                         // Game Over only if player answers wrong
                         gameOver = true;
@@ -143,13 +141,6 @@ window.addEventListener('load', function () {
             return this.y >= this.gameHeight - this.height;
         }
     }
-  
-
-
-
-
-   
-
 
     class Background {
         constructor(gameWidth, gameHeight) {
@@ -310,8 +301,8 @@ window.addEventListener('load', function () {
             if (this.x < 0 - this.width) {
                 this.markedforDeletion = true;
                 score++;
-            } 
-        
+            }
+       
         }
     }
     let enemyTimer = 0;
@@ -321,9 +312,9 @@ window.addEventListener('load', function () {
     function handleEnemies(deltaTime) {
         // Update the enemy spawn timer
         enemyTimer += deltaTime;
-    
+   
         if (enemyTimer > 5000) {
-            if (quizTime) { 
+            if (quizTime) {
                 // Spawn red, blue, or purple enemies during quizTime
                 const EnemyClass = enemiesToSpawn[currentEnemyIndex];
                 enemies.push(new EnemyClass(canvas.width, canvas.height));
@@ -334,24 +325,15 @@ window.addEventListener('load', function () {
             }
             enemyTimer = 0; // Reset the timer
         }
-    
+   
         // Update and draw enemies
         enemies.forEach(enemy => {
             enemy.draw(ctx);
             enemy.update(deltaTime);
         });
-    
+   
         // Remove enemies marked for deletion
         enemies = enemies.filter(enemy => !enemy.markedforDeletion);
-    }
-
-    function displayStatusText1(context) {
-
-            context.textAlign = 'center';
-            context.fillStyle = 'black';
-            context.fillText('Bonjour, sautez par-dessus les ennemis pour gagner des points. Lorsque une question est affichée, les ennemis changeront de couleur en fonction des options proposées. Vous devrez traverser lennemi de la couleur correspondant à la bonne réponse pour continuer', canvas.width / 2, 200);
-            context.fillStyle = 'white';
-            context.fillText('Bonjour, sautez par-dessus les ennemis pour gagner des points. Lorsque une question est affichée, les ennemis changeront de couleur en fonction des options proposées. Vous devrez traverser lennemi de la couleur correspondant à la bonne réponse pour continuer', canvas.width / 2 + 2, 202);
     }
 
     function displayStatusText(context) {
@@ -363,9 +345,9 @@ window.addEventListener('load', function () {
         if (gameOver) {
             context.textAlign = 'center';
             context.fillStyle = 'black';
-            context.fillText('Fin de Jeu, Ctrl + r pour réessayer! ', canvas.width / 2, 200);
+            context.fillText('Game Over, Ctrl + r To Try Again! ', canvas.width / 2, 200);
             context.fillStyle = 'white';
-            context.fillText('Fin de Jeu, Ctrl + r pour réessayer! ', canvas.width / 2 + 2, 202);
+            context.fillText('Game Over, Ctrl + r To Try Again! ', canvas.width / 2 + 2, 202);
         }
     }
 
@@ -386,7 +368,6 @@ window.addEventListener('load', function () {
         player.update(input, deltaTime, enemies);
         handleEnemies(deltaTime);
         displayStatusText(ctx);
-        displayStatusText1(ctx);
         if (!gameOver) requestAnimationFrame(animate);
     }
 });
