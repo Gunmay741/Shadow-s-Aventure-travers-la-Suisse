@@ -7,10 +7,10 @@ window.addEventListener('load', function () {
     let score = 0; 
     let gameOver = false; 
     let gameStarted = false; 
-    let quizTime = false;
+    let quizTime = true;
     let answerRed = false;
     let answerBlue = false;
-    let answerPurple = false;
+    let answerPurple = true;
 
     // Start screen elements
     const startScreen = document.createElement('div');
@@ -23,21 +23,24 @@ window.addEventListener('load', function () {
     startScreen.style.fontFamily = 'Helvetica, sans-serif';
     startScreen.style.color = 'white';
     startScreen.innerHTML = `
-        <h1>Shadow's Aventure à travers la Suisse</h1>
-        <h4>Tous les ennemis ont une aura invisible</h4>
-        <h4>autour d'eux qui mettra fin à votre partie!!</h4>
-        <h3>Vous ne pouvez appuyer que sur 1 touche à la fois</h3>
-        <p>Appuyez sur 'Entrée' pour démarrer</p>
+        <h3>Shadow's Aventure à travers la Suisse</h3>
+        <h4>Appuyez sur Entrée pour démarrer après avoir lu les instructions sur la droite</h4>
     `;
     document.body.appendChild(startScreen);
 
+    // Add a text box below the instructions
+
+
+
     // Handle keypress for game start
     window.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && !gameStarted) {
+         if (e.key === 'Enter' && !gameStarted ) {
             gameStarted = true;
             document.body.removeChild(startScreen); // Remove the start screen
             animate(0); // Start the game animation
         }
+        
+
     });
 
     class InputHandler {
@@ -104,6 +107,27 @@ window.addEventListener('load', function () {
                     }
                 }
             });
+
+            if (score == 14) {
+                quizTime = false;
+            
+                // Show the code 3942 for 3 seconds
+                let showCodeTime = true;
+            
+                setTimeout(() => {
+                    showCodeTime = false; // Hide the code after 3 seconds
+                }, 3000);
+            
+                // Display code 3942
+                if (showCodeTime) {
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = 'black';
+                    ctx.font = '40px Arial';
+                    ctx.fillText('Appuyez sur e la prochaine fois que vous démarrez le jeu', canvas.width / 2, 200);
+                    ctx.fillStyle = 'white';
+                    ctx.fillText('Appuyez sur e la prochaine fois que vous démarrez le jeu', canvas.width / 2 + 2, 202);
+                }
+            }
 
             // Sprite animation
             if (this.frameTimer > this.frameInterval) {
@@ -268,7 +292,6 @@ window.addEventListener('load', function () {
             }
         }
     }
-
     class Enemy {
         constructor(gameWidth, gameHeight){
             this.gameWidth = gameWidth;
@@ -343,11 +366,12 @@ window.addEventListener('load', function () {
         context.fillStyle = 'white';
         context.fillText('Score: ' + score, 22, 52);
         if (gameOver) {
+            context.font = '22px Helvetica';
             context.textAlign = 'center';
             context.fillStyle = 'black';
-            context.fillText('Game Over, Ctrl + r To Try Again! ', canvas.width / 2, 200);
+            context.fillText('Visitez https://gunmay741.github.io/Shadow/shadow.html pour le jeu complet', canvas.width / 2, 200);
             context.fillStyle = 'white';
-            context.fillText('Game Over, Ctrl + r To Try Again! ', canvas.width / 2 + 2, 202);
+            context.fillText('Visitez https://gunmay741.github.io/Shadow/shadow.html pour le jeu complet', canvas.width / 2 + 2, 202);
         }
     }
 
@@ -358,16 +382,96 @@ window.addEventListener('load', function () {
 
     let lastTime = 0;
 
-    function animate(timeStamp) {
-        const deltaTime = timeStamp - lastTime;
-        lastTime = timeStamp;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        background.draw(ctx);
-        background.update();
-        player.draw(ctx);
-        player.update(input, deltaTime, enemies);
-        handleEnemies(deltaTime);
-        displayStatusText(ctx);
-        if (!gameOver) requestAnimationFrame(animate);
+    // Other global declarations like player, enemies, etc.
+
+let bat; 
+let lastBatTime = 0; // Timer for bat spawn
+
+// Generate Bat
+function generateBat() {
+    const BatY = Math.random() * (canvas.height - 100); // Random height for bat
+    bat = {
+        x: canvas.width,
+        y: BatY,
+        width: 60,
+        height: 60,
+        emoji: '🐲', // bat emoji
+        draw: function (context) {
+            context.font = '60px Arial';
+            context.fillText(this.emoji, this.x, this.y);
+        },
+        update: function () {
+            this.x -= 9; // Move bat leftwards
+            if (this.x < 0) {
+                this.x = canvas.width;
+                this.y = Math.random() * (canvas.height - 100); // Randomize the Y position
+            }
+
+            // Check if player collides with bat (within 100px radius)
+            const dx = (player.x + player.width / 2) - (this.x + this.width / 2);
+            const dy = (player.y + player.height / 2) - (this.y + this.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 60) {
+                gameOver = true; // End the game if player is too close to bat
+            }
+        }
+    };
+}
+
+// Handle Bat Timer and Spawn
+function handleBat(deltaTime) {
+    const currentTime = Date.now();
+    if (currentTime - lastBatTime > 10000) { // If 10 seconds have passed
+        generateBat();
+        lastBatTime = currentTime; // Reset the timer
+    }
+    if (bat && quizTime === false) {
+        bat.update();
+        bat.draw(ctx);
+    }
+}
+   // Coin for hard mode
+   function generateCoin() {
+    coin = {
+        x: Math.random() * canvas.width,
+        y: Math.random() * (canvas.height - 50),
+        width: 50,
+        height: 50,
+        emoji: '💰',
+        draw: function (context) {
+            context.font = '30px Arial';
+            context.fillText(this.emoji, this.x, this.y);
+        },
+        update: function () {
+            this.x -= 3; // Move coin leftward
+            if (this.x < 0) {
+                this.x = canvas.width;
+                this.y = Math.random() * (canvas.height - 50);
+            }
+        }
+    };
+}
+// Game loop (animate)
+function animate(timeStamp) {
+    const deltaTime = timeStamp - lastTime;
+    lastTime = timeStamp;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Update and draw other elements
+    background.draw(ctx);
+    background.update();
+    player.draw(ctx);
+    player.update(input, deltaTime, enemies);
+    if (quizTime === false && coin) {
+        coin.update();
+        coin.draw(ctx);
+    }
+    
+    handleEnemies(deltaTime);
+    handleBat(deltaTime); // This calls the bat update and render
+
+    displayStatusText(ctx);
+    
+    if (!gameOver) requestAnimationFrame(animate);
     }
 });
