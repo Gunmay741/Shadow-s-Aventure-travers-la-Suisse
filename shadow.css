@@ -11,3 +11,54 @@ body{
 #playerImage, #backgroundImage, #enemyImage, #enemyImageRed, #enemyImageBlue, #enemyImagePurple{
     display: none;
 }
+.H {
+    color: white;
+}
+.question1 {
+    color: white;
+    position: absolute;
+    top: 0%;
+    left: 80%;
+}
+.answer1 {
+    color: white;
+    position: absolute;
+    top: 7%;
+    left: 80%;
+}
+.answer11 {
+    color: white;
+    position: absolute;
+    top: 10%;
+    left: 80%;
+}
+.answer111 {
+    color: white;
+    position: absolute;
+    top: 13%;
+    left: 80%;
+}
+.question2 {
+    color: white;
+    position: absolute;
+    top: 17%;
+    left: 80%;
+}
+.answer2 {
+    color: white;
+    position: absolute;
+    top: 23%;
+    left: 80%;
+}
+.answer22 {
+    color: white;
+    position: absolute;
+    top: 26%;
+    left: 80%;
+}
+.answer222 {
+    color: white;
+    position: absolute;
+    top: 29%;
+    left: 80%;
+}
