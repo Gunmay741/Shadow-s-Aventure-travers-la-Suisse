@@ -1,12 +1,12 @@
-window.addEventListener('load', function () {
-    const canvas = document.getElementById('canvas1');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 800;
-    canvas.height = 720;
-    let enemies = [];
-    let score = 0;
-    let gameOver = false;
-    let gameStarted = false;
+window.addEventListener('load', function () { 
+    const canvas = document.getElementById('canvas1'); 
+    const ctx = canvas.getContext('2d'); 
+    canvas.width = 800; 
+    canvas.height = 720; 
+    let enemies = []; 
+    let score = 0; 
+    let gameOver = false; 
+    let gameStarted = false; 
     let quizTime = false;
     let answerRed = false;
     let answerBlue = false;
@@ -47,7 +47,7 @@ window.addEventListener('load', function () {
                 if ((e.key === 'ArrowDown' ||
                     e.key === 'ArrowUp' ||
                     e.key === 'ArrowLeft' ||
-                    e.key === 'ArrowRight')
+                    e.key === 'ArrowRight') 
                     && this.keys.indexOf(e.key) === -1) {
                     this.keys.push(e.key);
                 }
@@ -88,7 +88,7 @@ window.addEventListener('load', function () {
                 const dx = (enemy.x + enemy.width / 2) - (this.x + this.width / 2);
                 const dy = (enemy.y + enemy.height / 2) - (this.y + this.height / 2);
                 const distance = Math.sqrt(dx * dx + dy * dy);
-               
+                
                 if (distance < enemy.width / 2 + this.width / 2) {
                     // Specific collision checks
                     if (enemy instanceof Enemy) {
@@ -96,8 +96,8 @@ window.addEventListener('load', function () {
                             // Game Over if a normal enemy hits the player and it's not quiz time
                             gameOver = true;
                         }
-                    } else if ((enemy instanceof EnemyRed && !answerRed) ||
-                               (enemy instanceof EnemyBlue && !answerBlue) ||
+                    } else if ((enemy instanceof EnemyRed && !answerRed) || 
+                               (enemy instanceof EnemyBlue && !answerBlue) || 
                                (enemy instanceof EnemyPurple && !answerPurple)) {
                         // Game Over only if player answers wrong
                         gameOver = true;
@@ -301,8 +301,8 @@ window.addEventListener('load', function () {
             if (this.x < 0 - this.width) {
                 this.markedforDeletion = true;
                 score++;
-            }
-       
+            } 
+        
         }
     }
     let enemyTimer = 0;
@@ -312,9 +312,9 @@ window.addEventListener('load', function () {
     function handleEnemies(deltaTime) {
         // Update the enemy spawn timer
         enemyTimer += deltaTime;
-   
+    
         if (enemyTimer > 5000) {
-            if (quizTime) {
+            if (quizTime) { 
                 // Spawn red, blue, or purple enemies during quizTime
                 const EnemyClass = enemiesToSpawn[currentEnemyIndex];
                 enemies.push(new EnemyClass(canvas.width, canvas.height));
@@ -325,13 +325,13 @@ window.addEventListener('load', function () {
             }
             enemyTimer = 0; // Reset the timer
         }
-   
+    
         // Update and draw enemies
         enemies.forEach(enemy => {
             enemy.draw(ctx);
             enemy.update(deltaTime);
         });
-   
+    
         // Remove enemies marked for deletion
         enemies = enemies.filter(enemy => !enemy.markedforDeletion);
     }
