@@ -6,59 +6,153 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 5px solid white;
 }
 #playerImage, #backgroundImage, #enemyImage, #enemyImageRed, #enemyImageBlue, #enemyImagePurple{
     display: none;
 }
 .H {
     color: white;
+    font-size: 14px;
 }
 .question1 {
     color: white;
     position: absolute;
     top: 0%;
-    left: 80%;
+    left:79%;
+    font-size: 17px;
 }
 .answer1 {
     color: white;
     position: absolute;
-    top: 7%;
+    top: 8%;
     left: 80%;
+    font-size: 17px;
 }
 .answer11 {
     color: white;
     position: absolute;
-    top: 10%;
+    top: 11%;
     left: 80%;
+    font-size: 17px;
 }
 .answer111 {
     color: white;
     position: absolute;
-    top: 13%;
+    top: 14%;
     left: 80%;
+    font-size: 17px;
 }
 .question2 {
     color: white;
     position: absolute;
-    top: 17%;
+    top: 20%;
     left: 80%;
+    font-size: 17px;
 }
 .answer2 {
     color: white;
     position: absolute;
-    top: 23%;
+    top: 26%;
     left: 80%;
+    font-size: 17px;
 }
 .answer22 {
     color: white;
     position: absolute;
-    top: 26%;
+    top: 29%;
     left: 80%;
+    font-size: 17px;
 }
 .answer222 {
     color: white;
     position: absolute;
-    top: 29%;
+    top: 32%;
     left: 80%;
+    font-size: 17px;
+}
+
+.question3 {
+    color: white;
+    position: absolute;
+    top: 37%;
+    left: 79%;
+    font-size: 17px;
+}
+.answer3 {
+    color: white;
+    position: absolute;
+    top: 43%;
+    left: 80%;
+    font-size: 17px;
+}
+.answer33 {
+    color: white;
+    position: absolute;
+    top: 46%;
+    left: 80%;
+    font-size: 17px;
+}
+.answer333 {
+    color: white;
+    position: absolute;
+    top: 49%;
+    left: 80%;
+    font-size: 17px;
+}
+
+.question4 {
+    color: white;
+    position: absolute;
+    top: 55%;
+    left: 79%;
+    font-size: 17px;
+}
+.answer4 {
+    color: white;
+    position: absolute;
+    top: 65%;
+    left: 80%;
+    font-size: 17px;
+}
+.answer44 {
+    color: white;
+    position: absolute;
+    top: 68%;
+    left: 80%;
+    font-size: 17px;
+}
+.answer444 {
+    color: white;
+    position: absolute;
+    top: 71%;
+    left: 80%;
+    font-size: 17px;
+}
+.question5 {
+    color: white;
+    position: absolute;
+    top: 78%;
+    left: 79%;
+    font-size: 17px;
+}
+.answer5 {
+    color: white;
+    position: absolute;
+    top: 87%;
+    left: 80%;
+    font-size: 17px;
+}
+.answer55 {
+    color: white;
+    position: absolute;
+    top: 90%;
+    left: 80%;
+    font-size: 17px;
+}
+.answer555 {
+    color: white;
+    position: absolute;
+    top: 93%;
+    left: 80%;
+    font-size: 17px;
 }
