@@ -108,25 +108,19 @@ window.addEventListener('load', function () {
                 }
             });
 
-            if (score == 14) {
+            if (score == 5){
+                answerPurple = false;
+                answerRed = true;
+            }
+
+            if (score == 10) {
+                answerRed = false;
+                answerBlue = true;
+            }
+
+
+            if (score == 15) {
                 quizTime = false;
-            
-                // Show the code 3942 for 3 seconds
-                let showCodeTime = true;
-            
-                setTimeout(() => {
-                    showCodeTime = false; // Hide the code after 3 seconds
-                }, 3000);
-            
-                // Display code 3942
-                if (showCodeTime) {
-                    ctx.textAlign = 'center';
-                    ctx.fillStyle = 'black';
-                    ctx.font = '40px Arial';
-                    ctx.fillText('Appuyez sur e la prochaine fois que vous démarrez le jeu', canvas.width / 2, 200);
-                    ctx.fillStyle = 'white';
-                    ctx.fillText('Appuyez sur e la prochaine fois que vous démarrez le jeu', canvas.width / 2 + 2, 202);
-                }
             }
 
             // Sprite animation
@@ -369,9 +363,9 @@ window.addEventListener('load', function () {
             context.font = '22px Helvetica';
             context.textAlign = 'center';
             context.fillStyle = 'black';
-            context.fillText('Visitez https://gunmay741.github.io/Shadow/shadow.html pour le jeu complet', canvas.width / 2, 200);
+            context.fillText('Visitez gunmay741.github.io/Shadow/shadow.html pour le jeu uniquement', canvas.width / 2, 200);
             context.fillStyle = 'white';
-            context.fillText('Visitez https://gunmay741.github.io/Shadow/shadow.html pour le jeu complet', canvas.width / 2 + 2, 202);
+            context.fillText('Visitez gunmay741.github.io/Shadow/shadow.html pour le jeu uniquement', canvas.width / 2 + 2, 202);
         }
     }
 
@@ -430,27 +424,7 @@ function handleBat(deltaTime) {
         bat.draw(ctx);
     }
 }
-   // Coin for hard mode
-   function generateCoin() {
-    coin = {
-        x: Math.random() * canvas.width,
-        y: Math.random() * (canvas.height - 50),
-        width: 50,
-        height: 50,
-        emoji: '💰',
-        draw: function (context) {
-            context.font = '30px Arial';
-            context.fillText(this.emoji, this.x, this.y);
-        },
-        update: function () {
-            this.x -= 3; // Move coin leftward
-            if (this.x < 0) {
-                this.x = canvas.width;
-                this.y = Math.random() * (canvas.height - 50);
-            }
-        }
-    };
-}
+
 // Game loop (animate)
 function animate(timeStamp) {
     const deltaTime = timeStamp - lastTime;
@@ -462,16 +436,9 @@ function animate(timeStamp) {
     background.update();
     player.draw(ctx);
     player.update(input, deltaTime, enemies);
-    if (quizTime === false && coin) {
-        coin.update();
-        coin.draw(ctx);
-    }
-    
     handleEnemies(deltaTime);
     handleBat(deltaTime); // This calls the bat update and render
-
     displayStatusText(ctx);
-    
     if (!gameOver) requestAnimationFrame(animate);
     }
 });
