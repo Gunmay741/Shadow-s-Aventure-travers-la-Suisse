@@ -1,3 +1,4 @@
+/* This was made and edited by gunmay khanna it is his property */
 window.addEventListener('load', function () { 
     const canvas = document.getElementById('canvas1'); 
     const ctx = canvas.getContext('2d'); 
