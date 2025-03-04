@@ -29,3 +29,17 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+li {
+  float: left;
+}
+.a {
+  display: block;
+  padding: 15px;
+  background-color: black;
+  color:white;
+}
