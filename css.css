@@ -1,0 +1,31 @@
+body {
+    background: #6C7A89;
+}
+  .heading {
+    color: black;
+    font-family: Arial;
+    text-decoration: underline;
+  }
+  .heading1 {
+    color: black;
+    font-family: Arial;
+    font-size: 40px;
+    text-decoration: underline;
+  }
+  .paragraph{
+    color: black;
+    font-family: Arial;
+  }
+
+.floating1 {
+    border: 5px solid black;
+    float: right;
+    margin-left: 100px;
+}
+
+ .floating12 {
+  border: 5px solid black;
+  float: right;
+  margin-left: 10px;
+  margin-right: 10px;
+}
